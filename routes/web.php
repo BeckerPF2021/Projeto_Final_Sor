@@ -35,9 +35,9 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Route::get('/colaboradores',[App\Http\Controllers\colaboradoresController::class, 'index']);
-Route::get('/clientes',[App\Http\Controllers\clienteController::class, 'index']);
-Route::put('/clientes/{CodCliente}',[App\Http\Controllers\clienteController::class, 'atualizar_cliente'])->name('atualizar_cliente');;
-Route::delete('/clientes/{CodCliente}',[App\Http\Controllers\clienteController::class, 'deletar_cliente'])->name('deletar_cidade');;
+Route::get('/cliente',[App\Http\Controllers\clienteController::class, 'index']);
+Route::put('/cliente/{CodCliente}',[App\Http\Controllers\clienteController::class, 'atualizar_cliente'])->name('atualizar_cliente');;
+Route::delete('/cliente/{CodCliente}',[App\Http\Controllers\clienteController::class, 'deletar_cliente'])->name('deletar_cliente');;
 
 
 

@@ -29,32 +29,32 @@
                             @if (isset($cliente))  {{-- Caso não encontre nenhum usuário --}}
                                 @foreach ($cliente as $cliente)
                                 <tr>
-                                    <th scope="row">{{ $cliente->CodCliente }}</th>
+                                    <th scope="row">{{ $cliente->id }}</th>
                                     <td>{{ $cliente->Nome }}</td>
                                     <td>{{ $cliente->endereco }}</td>
                                     <td>{{ $cliente->CPF }}</td>
                                     <td>{{ $cliente->Telefone }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#updateUserModal{{ $cliente->CodCliente }}">Editar</button>
-                                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="deletar_cliente({{ $cliente->CodCliente }}, '{{ $cliente->Nome }}')">Excluir</button>
+                                        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#updateUserModal{{ $cliente->id }}">Editar</button>
+                                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="deletar_cliente({{ $cliente->id }}, '{{ $cliente->Nome }}')">Excluir</button>
                                     </td>
                                 </tr>
-                                <div class="modal fade" id="updateUserModal{{ $cliente->CodCliente }}" tabindex="-1" role="dialog" aria-labelledby="updateUserModalLabel{{ $cliente->CodCliente }}" aria-hidden="true">
+                                <div class="modal fade" id="updateUserModal{{ $cliente->id }}" tabindex="-1" role="dialog" aria-labelledby="updateUserModalLabel{{ $cliente->id }}" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="updateUserModalLabel{{ $cliente->CodCliente }}">Atualizar Usuário</h5>
+                                                <h5 class="modal-title" id="updateUserModalLabel{{ $cliente->id }}">Atualizar Usuário</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                                                 <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form method="POST" action="{{ url('/cliente/'.$cliente->CodCliente) }}">
+                                                <form method="POST" action="{{ url('/cliente/'.$cliente->id) }}">
                                                     @csrf
                                                     @method('PUT')
                                                     <div class="form-group">
-                                                        <label for="CodCliente">Código:</label>
-                                                        <input type="number" class="form-control" name="CodCliente" value="{{ $cliente->CodCliente }}" required autofocus>
+                                                        <label for="id">Código:</label>
+                                                        <input type="number" class="form-control" name="id" value="{{ $cliente->id }}" required autofocus>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="Nome">Nome:</label>

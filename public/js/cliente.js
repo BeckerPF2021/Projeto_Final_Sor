@@ -8,6 +8,7 @@
 */
 
 function deletar_cliente(CodCliente, Nome) {
+    console.log(CodCliente)
     Swal.fire({
         title: 'Tem certeza?',
         text: `Você está prestes a excluir o usuário ${Nome}.`,

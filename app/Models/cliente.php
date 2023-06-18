@@ -13,7 +13,7 @@ class cliente extends Model
     {
         $cliente = cliente::find($CodCliente);
         $cliente->endereco = $endereco;
-        $cliente->nome = $Nome;
+        $cliente->Nome = $Nome;
         $cliente->CPF = $CPF;
         $cliente->Telefone = $Telefone;
         $cliente->save();

@@ -32,8 +32,8 @@ class clienteController extends Controller
     {
 
         $cliente = new cliente;
-        $cliente->updateclinte($CodCliente, $request->endereco, $request->Nome, $request-> CPF, $request ->Telefone);
-        return redirect('/clientes');
+        $cliente->updateCliente($CodCliente, $request->endereco, $request->Nome, $request-> CPF, $request ->Telefone);
+        return redirect('/cliente');
         
     }
 

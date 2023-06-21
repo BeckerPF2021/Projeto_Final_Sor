@@ -22,9 +22,9 @@ class clienteController extends Controller
 
         if ($cliente) {
             $cliente->delete();
-            return view('cliente')->with('success', 'Usuário excluído com sucesso!');
+            return view('base.cliente')->with('success', 'Usuário excluído com sucesso!');
         } else {
-            return view('cliente')->with('error', 'Usuário não encontrado.');
+            return view('base.cliente')->with('error', 'Usuário não encontrado.');
         }
     }
 

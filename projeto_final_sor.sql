@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14-Jun-2023 às 03:13
+-- Tempo de geração: 28-Jun-2023 às 02:07
 -- Versão do servidor: 10.4.20-MariaDB
 -- versão do PHP: 8.0.8
 
@@ -28,19 +28,23 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cliente` (
-  `id` int(11) NOT NULL,
-  `endereco` varchar(200) DEFAULT NULL,
-  `Nome` varchar(50) NOT NULL,
-  `CPF` varchar(15) NOT NULL,
-  `Telefone` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `endereco` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `Nome` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `CPF` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Telefone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `cliente`
 --
 
-INSERT INTO `cliente` (`id`, `endereco`, `Nome`, `CPF`, `Telefone`) VALUES
-(2, 'São Luiz Gonzaga', 'Marco Leandro', '02669336080', '55996126048');
+INSERT INTO `cliente` (`id`, `endereco`, `Nome`, `CPF`, `Telefone`, `created_at`, `updated_at`) VALUES
+(1, 'Passo Fundo - RS', 'Guilherme Becker', '026.693.360-27', '(54)99612-6048', '0000-00-00 00:00:00', '2023-06-25 01:09:30'),
+(2, 'Lagoão- RS', 'Cassieli Lima', '026.588.900-21', '(54)99159-6089', '0000-00-00 00:00:00', '2023-06-28 01:44:35'),
+(3, 'Soledade - RS', 'Marcos Santos', '023698789-24', '(54)895251515', '2023-06-28 03:06:02', '2023-06-28 03:06:49');
 
 -- --------------------------------------------------------
 
@@ -83,39 +87,22 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `funcionario` (
-  `Nome` varchar(50) NOT NULL,
-  `CodFuncionario` int(11) NOT NULL,
-  `Senha` varchar(20) DEFAULT NULL,
-  `Cargo` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `Nome` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Senha` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `Cargo` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Extraindo dados da tabela `funcionario`
 --
 
-INSERT INTO `funcionario` (`Nome`, `CodFuncionario`, `Senha`, `Cargo`) VALUES
-('Eduardo Mosquito', 1, 'das20d02', 'Sorveteiro N1'),
-('Cassieli Koehler', 2, '202022', 'Gerente'),
-('Ivo Sherrer', 3, 'ASDDADA', 'Auxiliar de Manutenção');
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `itens`
---
-
-CREATE TABLE `itens` (
-  `fk_Pedido_NumPedido` int(11) NOT NULL,
-  `fk_Produto_CodProduto` int(11) NOT NULL,
-  `Qtd` decimal(10,0) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Extraindo dados da tabela `itens`
---
-
-INSERT INTO `itens` (`fk_Pedido_NumPedido`, `fk_Produto_CodProduto`, `Qtd`) VALUES
-(1, 1, '12');
+INSERT INTO `funcionario` (`id`, `Nome`, `Senha`, `Cargo`, `created_at`, `updated_at`) VALUES
+(1, 'Eduardo Mosquito', '1', 'Estagiário', '0000-00-00 00:00:00', '2023-06-28 01:49:17'),
+(2, 'Suelen Vargas', '@Guilherme', 'Sabe estressar', '2023-06-28 02:59:57', '2023-06-28 02:59:57'),
+(3, 'Henrique Nunes', '@$%#AShuasdh2023', 'Sorveteiro', '2023-06-28 03:03:13', '2023-06-28 03:03:13');
 
 -- --------------------------------------------------------
 
@@ -142,7 +129,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (6, '2023_03_22_001139_nome_migration', 1),
 (7, '2023_03_23_00005_create_clientes_table', 1),
 (8, '2023_04_11_193242_create_produtos', 1),
-(9, '2023_04_11_194029_create_categorias_produto', 1);
+(9, '2023_04_11_194029_create_categorias_produto', 1),
+(10, '2023_05_23_00002_create_funcionario_table', 1),
+(11, '2023_05_23_00003_create_cliente_table', 1),
+(12, '2023_05_23_00003_create_produto_table', 1),
+(13, '2023_05_23_00004_create_pedido_table', 1),
+(14, '2023_05_23_00006_create_tipo_produto_table', 2);
 
 -- --------------------------------------------------------
 
@@ -175,20 +167,15 @@ CREATE TABLE `password_reset_tokens` (
 --
 
 CREATE TABLE `pedido` (
-  `NumPedido` int(11) NOT NULL,
-  `DataPedido` date DEFAULT curdate(),
-  `Descricao` varchar(50) DEFAULT NULL,
-  `fk_Cliente_CodCliente` int(11) DEFAULT NULL,
-  `fk_Funcionario_CodFuncionario` int(11) DEFAULT NULL,
-  `PrecoPedido` float DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Extraindo dados da tabela `pedido`
---
-
-INSERT INTO `pedido` (`NumPedido`, `DataPedido`, `Descricao`, `fk_Cliente_CodCliente`, `fk_Funcionario_CodFuncionario`, `PrecoPedido`) VALUES
-(1, '2022-11-22', 'Picolés', 2, 3, 15.8);
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `DataPedido` date NOT NULL DEFAULT curdate(),
+  `Descricao` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fk_Cliente_CodCliente` bigint(20) UNSIGNED DEFAULT NULL,
+  `fk_Funcionario_CodFuncionario` bigint(20) UNSIGNED DEFAULT NULL,
+  `PrecoPedido` double(8,2) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -216,21 +203,14 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 CREATE TABLE `produto` (
-  `CodProduto` int(11) NOT NULL,
-  `Nome` varchar(50) NOT NULL,
-  `Descricao` varchar(50) DEFAULT NULL,
-  `Preco` decimal(10,2) NOT NULL,
-  `fk_TipoProduto_CodTipo` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Extraindo dados da tabela `produto`
---
-
-INSERT INTO `produto` (`CodProduto`, `Nome`, `Descricao`, `Preco`, `fk_TipoProduto_CodTipo`) VALUES
-(1, 'Picole Uva', 'Morango', '3.50', 2),
-(2, 'Sorvete de chocolate', 'Cascão', '7.80', 1),
-(3, 'Sorvetes de Pistache', 'Contem pistache', '15.00', 2);
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `Nome` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Descricao` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `Preco` double(8,2) NOT NULL,
+  `idTipoProduto` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -267,18 +247,11 @@ CREATE TABLE `produto_categorias` (
 --
 
 CREATE TABLE `tipoproduto` (
-  `CodTipo` int(11) NOT NULL,
-  `Descricao` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Extraindo dados da tabela `tipoproduto`
---
-
-INSERT INTO `tipoproduto` (`CodTipo`, `Descricao`) VALUES
-(1, 'Casquinha'),
-(2, 'Pote 1 Litro'),
-(3, 'Cascão');
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `Descricao` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -291,11 +264,21 @@ CREATE TABLE `users` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `senha` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Extraindo dados da tabela `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Guilherme', 'guilherme@upf.br', NULL, '$2y$10$exwbPzyzPXPGeZYWBzA8EuWkkMU90NCCdHVW7olOtktP7DsquP/E.', NULL, '2023-06-25 18:14:52', '2023-06-25 18:14:52'),
+(2, 'cassi', 'cassieli@upf.br', NULL, '$2y$10$/d8WmHEfvr0Z0XTHXLyPe.B2LYUYoekODegafSS8lWguNEQVD5QVa', NULL, '2023-06-25 18:15:50', '2023-06-25 18:15:50'),
+(3, 'Guilherme Becker', '194749@upf.br', NULL, '$2y$10$KlZrjlkuTrMxNI3iPvYLr./.ihy3uRdj1c09IdFc98mnbr9GcD2ym', NULL, '2023-06-28 01:14:09', '2023-06-28 01:14:09'),
+(4, 'Guilherme Becker', '390837@upf.br', NULL, '$2y$10$9ZHASh5nYwuBrk02sGz4i.nl0rQHo2wrt6a6CLBTsDct7cAYt7ZHK', NULL, '2023-06-28 01:43:23', '2023-06-28 01:43:23');
 
 --
 -- Índices para tabelas despejadas
@@ -325,15 +308,7 @@ ALTER TABLE `failed_jobs`
 -- Índices para tabela `funcionario`
 --
 ALTER TABLE `funcionario`
-  ADD PRIMARY KEY (`CodFuncionario`);
-
---
--- Índices para tabela `itens`
---
-ALTER TABLE `itens`
-  ADD PRIMARY KEY (`fk_Pedido_NumPedido`,`fk_Produto_CodProduto`),
-  ADD KEY `FK_itens_1` (`fk_Pedido_NumPedido`),
-  ADD KEY `FK_itens_2` (`fk_Produto_CodProduto`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices para tabela `migrations`
@@ -357,9 +332,9 @@ ALTER TABLE `password_reset_tokens`
 -- Índices para tabela `pedido`
 --
 ALTER TABLE `pedido`
-  ADD PRIMARY KEY (`NumPedido`),
-  ADD KEY `FK_Pedido_2` (`fk_Cliente_CodCliente`),
-  ADD KEY `FK_Pedido_3` (`fk_Funcionario_CodFuncionario`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pedido_fk_cliente_codcliente_foreign` (`fk_Cliente_CodCliente`),
+  ADD KEY `pedido_fk_funcionario_codfuncionario_foreign` (`fk_Funcionario_CodFuncionario`);
 
 --
 -- Índices para tabela `personal_access_tokens`
@@ -373,8 +348,8 @@ ALTER TABLE `personal_access_tokens`
 -- Índices para tabela `produto`
 --
 ALTER TABLE `produto`
-  ADD PRIMARY KEY (`CodProduto`),
-  ADD KEY `FK_Produto_2` (`fk_TipoProduto_CodTipo`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_tipo_produto_id` (`idTipoProduto`);
 
 --
 -- Índices para tabela `produtos`
@@ -392,7 +367,7 @@ ALTER TABLE `produto_categorias`
 -- Índices para tabela `tipoproduto`
 --
 ALTER TABLE `tipoproduto`
-  ADD PRIMARY KEY (`CodTipo`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices para tabela `users`
@@ -404,6 +379,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT de tabelas despejadas
 --
+
+--
+-- AUTO_INCREMENT de tabela `cliente`
+--
+ALTER TABLE `cliente`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `clientes`
@@ -418,15 +399,33 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `funcionario`
+--
+ALTER TABLE `funcionario`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de tabela `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT de tabela `pedido`
+--
+ALTER TABLE `pedido`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `produto`
+--
+ALTER TABLE `produto`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -442,34 +441,27 @@ ALTER TABLE `produto_categorias`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `tipoproduto`
+--
+ALTER TABLE `tipoproduto`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restrições para despejos de tabelas
 --
 
 --
--- Limitadores para a tabela `itens`
---
-ALTER TABLE `itens`
-  ADD CONSTRAINT `FK_itens_1` FOREIGN KEY (`fk_Pedido_NumPedido`) REFERENCES `pedido` (`NumPedido`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_itens_2` FOREIGN KEY (`fk_Produto_CodProduto`) REFERENCES `produto` (`CodProduto`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Limitadores para a tabela `pedido`
 --
 ALTER TABLE `pedido`
-  ADD CONSTRAINT `FK_Pedido_2` FOREIGN KEY (`fk_Cliente_CodCliente`) REFERENCES `cliente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_Pedido_3` FOREIGN KEY (`fk_Funcionario_CodFuncionario`) REFERENCES `funcionario` (`CodFuncionario`);
-
---
--- Limitadores para a tabela `produto`
---
-ALTER TABLE `produto`
-  ADD CONSTRAINT `FK_Produto_2` FOREIGN KEY (`fk_TipoProduto_CodTipo`) REFERENCES `tipoproduto` (`CodTipo`);
+  ADD CONSTRAINT `pedido_fk_cliente_codcliente_foreign` FOREIGN KEY (`fk_Cliente_CodCliente`) REFERENCES `cliente` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `pedido_fk_funcionario_codfuncionario_foreign` FOREIGN KEY (`fk_Funcionario_CodFuncionario`) REFERENCES `funcionario` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

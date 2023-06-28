@@ -16,41 +16,32 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/sobre', function () {
-    return view('base.sobre');
-})->name('sobre');
-
-Route::get('/noticias', function () {
-    return view('base.noticias');
-})->name('noticias');
-
-Route::get('/clientes', function () {
-    return view('base.cliente');
-})->name('clientes');
 
 Auth::routes();
+
+Route::get('/cliente', function () {
+    return view('base.cliente');
+})->name('cliente');
+
+Route::get('/funcionario', function () {
+    return view('base.funcionario');
+})->name('funcionario');
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-//Route::get('/colaboradores',[App\Http\Controllers\colaboradoresController::class, 'index']);
+Route::get('/cliente', [App\Http\Controllers\clienteController::class, 'index']);
+
+// Rota para cliente
 Route::get('/cliente',[App\Http\Controllers\clienteController::class, 'index']);
 Route::put('/cliente/{CodCliente}',[App\Http\Controllers\clienteController::class, 'atualizar_cliente'])->name('atualizar_cliente');;
+Route::post('/cliente',[App\Http\Controllers\clienteController::class, 'inserir_Cliente'])->name('inserir_Cliente');;
 Route::delete('/cliente/{CodCliente}',[App\Http\Controllers\clienteController::class, 'deletar_cliente'])->name('deletar_cliente');;
 
-
-
-
-
-
-
-
-
-
-Route::get('/funcionarios',[App\Http\Controllers\funcionarioController::class, 'index']);
-Route::get('/itens',[App\Http\Controllers\itensController::class, 'index']);
-Route::get('/pedido',[App\Http\Controllers\pedidoController::class, 'index']);
-Route::get('/produtos',[App\Http\Controllers\produtoController::class, 'index']);
-Route::get('/tipoproduto',[App\Http\Controllers\tipoprodutoController::class, 'index']);
+// Rota para funcionario
+Route::get('/funcionario',[App\Http\Controllers\funcionarioController::class, 'index']);
+Route::put('/funcionario/{id}',[App\Http\Controllers\funcionarioController::class, 'atualizar_funcionario'])->name('atualizar_funcionario');;
+Route::post('/funcionario',[App\Http\Controllers\funcionarioController::class, 'inserir_funcionario'])->name('inserir_funcionario');;
+Route::delete('/funcionario/{id}',[App\Http\Controllers\funcionarioController::class, 'deletar_funcionario'])->name('deletar_funcionario');;
 

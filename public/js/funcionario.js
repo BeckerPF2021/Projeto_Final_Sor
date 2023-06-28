@@ -7,22 +7,21 @@
     Caso ocorra algum erro durante a exclusão, uma mensagem de erro é exibida.
 */
 
-function deletar_cliente(CodCliente, Nome) {
-    console.log(CodCliente)
+function deleteUser(id, Nome) {
     Swal.fire({
         title: 'Tem certeza?',
-        text: `Você está prestes a excluir o cliente ${Nome}.`,
+        text: `Você está prestes a excluir o Funcionario ${Nome}.`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Sim, excluir',
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            axios.delete(`/cliente/${CodCliente}`)
+            axios.delete(`/funcionario/${id}`)
                 .then(() => {
                     Swal.fire(
                         'Excluído!',
-                        'O cliente foi excluído com sucesso.',
+                        'O Funcionario foi excluído com sucesso.',
                         'success'
                     ).then(() => {
                         location.reload();

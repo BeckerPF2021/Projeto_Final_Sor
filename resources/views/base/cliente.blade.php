@@ -43,7 +43,7 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="updateUserModalLabel{{ $cliente->id }}">Atualizar Usuário</h5>
+                                                <h5 class="modal-title" id="updateUserModalLabel{{ $cliente->id }}">Atualizar Cliente</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                                                 <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -74,9 +74,23 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                        <button type="submit" id="atualizar_cliente" class="btn btn-primary">Atualizar</button>
-                                                    </div>
+                                                        <button type="submit" id="atualizar_cliente" class="btn btn-primary">Atualizar</button>                                                    </div>
                                                 </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="insertUserModal" tabindex="-1" role="dialog" aria-labelledby="insertUserModal" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="insertUserModal">Cadastrar Cliente</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
                                             </div>
                                         </div>
                                     </div>
@@ -85,6 +99,33 @@
                             @endif
                         </tbody>
                     </table>
+                    <form method="POST" action="{{ url('/cliente') }}">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <div class="form-group">
+                                                        <label for="id">Código:</label>
+                                                        <input type="number" class="form-control" name="id" value="{}" required >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="Nome">Nome:</label>
+                                                        <input type="text" class="form-control" name="Nome" value="" required >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="endereco">Endereço:</label>
+                                                        <input type="text" class="form-control" name="endereco" value="" required >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="CPF">CPF:</label>
+                                                        <input type="text" class="form-control" name="CPF" value="" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="Telefone">Telefone:</label>
+                                                        <input type="text" class="form-control" name="Telefone" value="" required>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" id="inserir_Cliente" class="btn btn-primary">Cadastrar</button>                                                    </div>
+                                                </form>
                 </div>
             </div>
         </div>

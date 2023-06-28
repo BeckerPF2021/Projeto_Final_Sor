@@ -1,0 +1,21 @@
+Inicie a pasta como um repositório do Git através do comando:
+git init
+
+Em seguida, adicione os arquivos de configuração para preparar o commit:
+git add .
+
+Verificar status dos arquivos
+git status
+
+Opcional: Adicione um arquivo readme caso não tenha iniciado o repositório com ele:
+git add README.md
+
+Crie um novo commit para os arquivos que irá subir para o repositório:
+git commit -m "Pronto"
+
+Suba seus arquivos utilizando a URL gerada no passo 2 no seguinte comando:
+git remote add origin https://github.com/BeckerPF2021/Projeto_Final_Sor.git
+
+Autorize o upload com seu login e senha:
+git push -u origin master
+

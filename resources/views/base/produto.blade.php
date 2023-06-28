@@ -29,11 +29,11 @@
                             @if (isset($produto))  {{-- Caso não encontre nenhum usuário --}}
                                 @foreach ($produto as $produto)
                                 <tr>
-                                    <th scope="row">{{ $produto->CodProduto }}</th>
+                                    <th scope="row">{{ $produto->id }}</th>
                                     <td>{{ $produto->Nome }}</td>
                                     <td>{{ $produto->Descricao }}</td>
                                     <td>{{ $produto->Preco }}</td>
-                                    <td>{{ $produto->fk_TipoProduto_CodTipo  }}</td>
+                                    <td>{{ $produto->idTipoProduto }}</td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#updateUserModal{{ $produto->id }}">Editar</button>
                                         <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteUser({{ $produto->id }}, '{{ $produto->name }}')">Excluir</button>
@@ -49,12 +49,12 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form method="POST" action="{{ url('/colaboradores/'.$produto->id) }}">
+                                                <form method="POST" action="{{ url('/produto/'.$produto->id) }}">
                                                     @csrf
                                                     @method('PUT')
                                                     <div class="form-group">
-                                                        <label for="CodProduto">Código:</label>
-                                                        <input type="text" class="form-control" name="CodProduto" value="{{ $produto->CodProduto }}" required autofocus>
+                                                        <label for="id">Código:</label>
+                                                        <input type="text" class="form-control" name="id" value="{{ $produto->id }}" required autofocus>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="Nome">Nome:</label>

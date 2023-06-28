@@ -37,4 +37,18 @@ class clienteController extends Controller
         
     }
 
+    public function inserir_Cliente(Request $request)
+    {
+        $validar = $request->validate([
+            'id' => 'required',
+            'endereco' => 'required',
+            'Nome' => 'required',
+            'CPF' => 'required',
+            'Telefone' => 'required',
+        ]);
+        cliente::create($validar);
+
+        return redirect('/cliente');
+    }
+    
 }

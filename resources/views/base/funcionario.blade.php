@@ -19,7 +19,6 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Nome</th>
-                                <th scope="col">Senha</th>
                                 <th scope="col">Cargo</th>
                                 <th scope="col">Ações</th>
                             </tr>
@@ -28,9 +27,8 @@
                             @if (isset($funcionario))  {{-- Caso não encontre nenhum usuário --}}
                                 @foreach ($funcionario as $funcionario)
                                 <tr>
-                                    <th scope="row">{{ $funcionario->CodFuncionario }}</th>
+                                    <th scope="row">{{ $funcionario->id }}</th>
                                     <td>{{ $funcionario->Nome }}</td> 
-                                    <td>{{ $funcionario->Senha }}</td>
                                     <td>{{ $funcionario->Cargo }}</td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#updateUserModal{{ $funcionario->id }}">Editar</button>
@@ -41,18 +39,18 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="updateUserModalLabel{{ $funcionario->id }}">Atualizar Usuário</h5>
+                                                <h5 class="modal-title" id="updateUserModalLabel{{ $funcionario->id }}">Atualizar funcionario</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                                                 <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form method="POST" action="{{ url('/colaboradores/'.$funcionario->id) }}">
+                                                <form method="POST" action="{{ url('/funcionario/'.$funcionario->id) }}">
                                                     @csrf
                                                     @method('PUT')
                                                     <div class="form-group">
-                                                        <label for="CodFuncionario">Codigo:</label>
-                                                        <input type="text" class="form-control" name="CodFuncionario" value="{{ $funcionario->CodFuncionario }}" required autofocus>
+                                                        <label for="id">Codigo:</label>
+                                                        <input type="text" class="form-control" name="id" value="{{ $funcionario->id }}" required autofocus>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="Nome">Nome:</label>
@@ -68,7 +66,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                        <button type="submit" id="atualizar_colaborador" class="btn btn-primary">Atualizar</button>
+                                                        <button type="submit" id="atualizar_funcionario" class="btn btn-primary">Atualizar</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -78,52 +76,57 @@
                                 @endforeach
                             @endif
                         </tbody>
+                                <div class="modal fade" id="inserirUserModal" tabindex="-1" role="dialog" aria-labelledby="inserirUserModal" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="inserirUserModal">Cadastrar funcionario</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                     </table>
+                    <form method="POST" action="{{ url('/funcionario') }}">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <div class="form-group">
+                                                        <label for="id">Codigo:</label>
+                                                        <input type="text" class="form-control" name="id" value="" required >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="Nome">Nome:</label>
+                                                        <input type="text" class="form-control" name="Nome" value="" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="Senha">Senha:</label>
+                                                        <input type="password" class="form-control" name="Senha" value="" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="Cargo">Cargo:</label>
+                                                        <input type="text" class="form-control" name="Cargo" value="" required>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" id="inserir_funcionario" class="btn btn-primary">Cadastrar</button>
+                                                    </div>
+                                                </form>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>
 
 @endsection
 
 @section('scripts')
-<script src="{{ asset('js/colaboradores.js') }}"></script>
+<script src="{{ asset('js/funcionario.js') }}"></script>
 {{-- A função asset() é uma função do Laravel que gera uma URL completa para um arquivo localizado em sua pasta public --}}
 
 {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
-{{-- <script>
-    function deleteUser(id, name) {
-        Swal.fire({
-            title: 'Tem certeza?',
-            text: `Você está prestes a excluir o usuário ${name}.`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Sim, excluir',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axios.delete(`/users/${id}`)
-                    .then(() => {
-                        Swal.fire(
-                            'Excluído!',
-                            'O usuário foi excluído com sucesso.',
-                            'success'
-                        ).then(() => {
-                            location.reload();
-                        });
-                    })
-                    .catch(() => {
-                        Swal.fire(
-                            'Erro!',
-                            'Não foi possível excluir o usuário.',
-                            'error'
-                        );
-                    });
-            }
-        });
-    }
-</script> --}}
 @endsection
